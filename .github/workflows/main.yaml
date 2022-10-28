@@ -7,21 +7,20 @@ on:
 jobs:
 #First we will see the application build or not , then we will deploy in EC2
 
-Deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    
-    steps:
-      - uses: actions/checkout@v2 
-      - name: Deploy in EC2
-        env:
-            PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
-            HOSTNAME : ec2-3-108-197-218.ap-south-1.compute.amazonaws.com
-            USER_NAME : ubuntu
-            
-        run: |
-          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-          
-            #Now we have got the access of EC2 and we will start the deploy .
-            touch test.txt
+  Deploy:
+      runs-on: ubuntu-latest
+
+      steps:
+        - uses: actions/checkout@v2 
+        - name: Deploy in EC2
+          env:
+              PRIVATE_KEY: ${{ secrets.AWS_PRIVATE_KEY  }}
+              HOSTNAME : ec2-3-108-197-218.ap-south-1.compute.amazonaws.com
+              USER_NAME : ubuntu
+
+          run: |
+            echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+            ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+
+              #Now we have got the access of EC2 and we will start the deploy .
+              touch test.txt
