@@ -25,5 +25,5 @@ jobs:
               #Now we have got the access of EC2 and we will start the deploy .
               touch test.txt
               ls
-              sed 's/ekobon-server:latest/ekobon-server:dev/' docker-compose.yml
+              sed -i 's/ekobon-server:latest/ekobon-server:dev/' docker-compose.yml
               '
